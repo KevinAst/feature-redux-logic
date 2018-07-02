@@ -11,12 +11,11 @@ and **contains migration instructions**.
 
 Release  | What                                            | *When*
 ---------|-------------------------------------------------|------------------
-[v0.1.3] | Establish Polyfill Strategy                     | *July ??, 2018*
+[v0.1.3] | Establish Polyfill Strategy                     | *July 2, 2018*
 [v0.1.0] | Initial Release                                 | *March 6, 2018*
 
 
-<!-- ?? change next line WHEN date is known -->
-[v0.1.3]: #v013---establish-polyfill-strategy-july--2018
+[v0.1.3]: #v013---establish-polyfill-strategy-july-2-2018
 [v0.1.0]: #v010---initial-release-march-6-2018
 
 
@@ -52,13 +51,13 @@ UNRELEASED *********************************************************************
 
 <!-- *** RELEASE *************************************************************** -->
 
-## v0.1.3 - Establish Polyfill Strategy *(July ??, 2018)*
+## v0.1.3 - Establish Polyfill Strategy *(July 2, 2018)*
 
 [GitHub Content](https://github.com/KevinAst/feature-redux-logic/tree/v0.1.3)
 &bull;
 [GitHub Release](https://github.com/KevinAst/feature-redux-logic/releases/tag/v0.1.3)
 &bull;
-[Diff](https://github.com/KevinAst/feature-redux-logic/compare/v0.1.2...v0.1.3)
+[Diff](https://github.com/KevinAst/feature-redux-logic/compare/v0.1.0...v0.1.3)
 
 **NOTE**: This release is a **non-breaking change** _(i.e. no API was affected)_.
 
