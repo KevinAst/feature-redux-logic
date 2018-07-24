@@ -47,7 +47,7 @@ describe('logicAspect() tests', () => {
   describe('assembleFeatureContent()', () => {
 
     test('no logic modules (DEFAULT)', () => {
-      expect(()=>logicAspect.assembleFeatureContent('simulated app', []))
+      expect(()=>logicAspect.assembleFeatureContent('simulated fassets', []))
         .toThrow(/found NO logic modules within your features/);
     });
 
@@ -59,7 +59,7 @@ describe('logicAspect() tests', () => {
         logicAspect.config.allowNoLogic$ = false;
       });
       test('expecting getReduxMiddleware() to be null', () => {
-        logicAspect.assembleFeatureContent('simulated app', []);
+        logicAspect.assembleFeatureContent('simulated fassets', []);
         expect(logicAspect.getReduxMiddleware())
           .toBe(null);
       });
@@ -73,7 +73,7 @@ describe('logicAspect() tests', () => {
         logicAspect.config.allowNoLogic$ = false;
       });
       test('expecting getReduxMiddleware() to be non-null', () => {
-        logicAspect.assembleFeatureContent('simulated app', []);
+        logicAspect.assembleFeatureContent('simulated fassets', []);
         expect(logicAspect.getReduxMiddleware())
           .not.toBe(null);
       });
@@ -81,7 +81,7 @@ describe('logicAspect() tests', () => {
 
     describe('features have logic modules', () => {
       test('expecting getReduxMiddleware() to be non-null', () => {
-        logicAspect.assembleFeatureContent('simulated app', [
+        logicAspect.assembleFeatureContent('simulated fassets', [
           createFeature({
             name:  'feature1',
             logic: ['simulated', 'logic']
