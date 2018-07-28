@@ -184,7 +184,7 @@ to **feature-redux-logic** to the extent that they are needed to configure
 
 Because logic modules may require access to **feature-u**'s [`Fassets
 object`] during code expansion, this property can also be a
-**feature-u** [`managedExpansion()`] callback _(a function that
+**feature-u** [`expandWithFassets()`] callback _(a function that
 returns the logic modules)_ ... please refer to **feature-u**'s
 discussion of [Managed Code Expansion].
 
@@ -416,7 +416,7 @@ implemented)_ is intended to address this issue.
 [feature-u]:                   https://feature-u.js.org/
 [`launchApp()`]:               https://feature-u.js.org/cur/api.html#launchApp
 [`createFeature()`]:           https://feature-u.js.org/cur/api.html#createFeature
-[`managedExpansion()`]:        https://feature-u.js.org/cur/api.html#managedExpansion
+[`expandWithFassets()`]:       https://feature-u.js.org/cur/api.html#expandWithFassets
 [`Feature`]:                   https://feature-u.js.org/cur/api.html#Feature
 [`Fassets object`]:            https://feature-u.js.org/cur/api.html#Fassets
 [Managed Code Expansion]:      https://feature-u.js.org/cur/crossCommunication.html#managed-code-expansion
