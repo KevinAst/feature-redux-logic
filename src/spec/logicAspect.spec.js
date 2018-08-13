@@ -1,5 +1,7 @@
-import {createFeature}  from  'feature-u';
-import {logicAspect}    from '..'; // modules under test
+import {createFeature}     from 'feature-u';
+import {createLogicAspect} from '..'; // modules under test
+
+const logicAspect = createLogicAspect();
 
 // temporarly turn on logging (just for fun)
 // ... must include launchApp on this
@@ -13,6 +15,19 @@ describe('logicAspect() tests', () => {
       expect( logicAspect.name)
         .toBe('logic');
     });
+
+  });
+
+
+  describe('validate createLogicAspect() parameter violation', () => {
+
+    expect( () => createLogicAspect(null) )
+      .toThrow(/name is required/);
+    // THROW: createLogicAspect() parameter violation: name is required
+
+    expect( () => createLogicAspect(123) )
+      .toThrow(/name must be a string/);
+    // THROW: createLogicAspect() parameter violation: name must be a string
 
   });
 

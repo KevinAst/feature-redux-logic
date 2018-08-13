@@ -1,21 +1,33 @@
 import {createLogicMiddleware} from 'redux-logic';  // peerDependency
 import {createAspect,
         launchApp}             from 'feature-u';    // peerDependency:
+import verify                  from './util/verify';
 
 // our logger (integrated/activated via feature-u)
 const logf = launchApp.diag.logf.newLogger('- ***feature-redux-logic*** logicAspect: ');
 
 // NOTE: See README for complete description
-export default createAspect({
-  name: 'logic',
-  validateFeatureContent,
-  assembleFeatureContent,
-  getReduxMiddleware,
-  config: {
-    allowNoLogic$: false,   // PUBLIC: client override to: true || [{logicModules}]
-    createLogicMiddleware$, // HIDDEN: createLogicMiddleware$(fassets, appLogic): reduxMiddleware
-  },
-});
+export default function createLogicAspect(name='logic') {
+
+  // validate parameters
+  const check = verify.prefix('createLogicAspect() parameter violation: ');
+
+  check(name,                      'name is required');
+  check(typeof name === 'string',  'name must be a string'); // NOTE: didn't want to introduce lodash.isstring dependancy (in the mix of everything else going on in the 1.0.0 upgrade)
+
+  // create/promote our new aspect
+  const logicAspect = createAspect({
+    name,
+    validateFeatureContent,
+    assembleFeatureContent,
+    getReduxMiddleware,
+    config: {
+      allowNoLogic$: false,   // PUBLIC: client override to: true || [{logicModules}]
+      createLogicMiddleware$, // HIDDEN: createLogicMiddleware$(fassets, appLogic): reduxMiddleware
+    },
+  });
+  return logicAspect;
+}
 
 
 /**

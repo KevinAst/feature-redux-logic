@@ -98,16 +98,16 @@ Polyfills](#potential-need-for-polyfills))_.
 
    **src/app.js**
    ```js
-   import {launchApp}      from 'feature-u';
-   import {reducerAspect}  from 'feature-redux';       // **2**
-   import {logicAspect}    from 'feature-redux-logic'; // **1**
-   import features         from './feature';
+   import {launchApp}           from 'feature-u';
+   import {createReducerAspect} from 'feature-redux';       // **2**
+   import {createLogicAspect}   from 'feature-redux-logic'; // **1**
+   import features              from './feature';
 
    export default launchApp({
 
      aspects: [
-       reducerAspect,  // **2**
-       logicAspect,    // **1**
+       createReducerAspect(), // **2**
+       createLogicAspect(),   // **1**
        ... other Aspects here
      ],
 
@@ -344,6 +344,8 @@ modules were specified by your features.
 ### logicAspect: Aspect
 
 <ul><!--- indentation hack for github - other attempts with style is stripped (be careful with number bullets) ---> 
+
+`API: createLogicAspect([name='logic']): logicAspect`
 
 The `logicAspect` is the [feature-u] plugin that facilitates
 [redux-logic] integration to your features.

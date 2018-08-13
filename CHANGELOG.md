@@ -11,7 +11,7 @@ and **contains migration instructions**.
 
 Release  | What                                            | *When*
 ---------|-------------------------------------------------|------------------
-[v1.0.0] | feature-u V1 Integration                        | *July ??, 2018*
+[v1.0.0] | feature-u V1 Integration                        | *August ??, 2018*
 [v0.1.3] | Establish Polyfill Strategy                     | *July 2, 2018*
 [v0.1.0] | Initial Release                                 | *March 6, 2018*
 
@@ -52,7 +52,7 @@ UNRELEASED *********************************************************************
 
 <!-- *** RELEASE *************************************************************** -->
 
-## v1.0.0 - feature-u V1 Integration *(July ??, 2018)*
+## v1.0.0 - feature-u V1 Integration *(August ??, 2018)*
 
 [GitHub Content](https://github.com/KevinAst/feature-redux-logic/tree/v1.0.0)
 &bull;
@@ -63,9 +63,17 @@ UNRELEASED *********************************************************************
 **NOTE**: This release contains **breaking changes** from prior
 releases _(i.e. a retrofit of client code is necessary)_.
 
-- **Review**: Provide integration to 
-  [**feature-u V1**](https://feature-u.js.org/cur/history.html#v1_0_0)
-  which has replaced the `app` object with a `fassets` object.  
+- **Added/Removed**: Eliminate singletons in favor of creators
+
+  The singleton: `logicAspect`, has be replaced with a new creator:
+  `createLogicAspect()`.
+
+  This is useful in both testing and server side rendering.
+
+- **Review**: Integrate to [**feature-u V1**](https://feature-u.js.org/cur/history.html#v1_0_0)
+
+  **feature-u V1** has replaced the `app` object with a `fassets`
+  object.
 
   In general, this is not a change that would normally break a plugin,
   because app/fassets is a positional parameter that is merely passed
