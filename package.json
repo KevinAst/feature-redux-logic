@@ -93,6 +93,7 @@
     "feature-u": ">=1.0.0",
     "jest": "^22.1.4",
     "npm-run-all": "^4.0.2",
+    "react": ">=0.14.0",
     "redux-logic": ">=0.7.0",
     "rimraf": "^2.6.1",
     "webpack": "^2.4.1"
