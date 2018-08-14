@@ -70,7 +70,7 @@ Let's see how this all works together ...
   npm install --save redux-logic
   ```
   <!--- WITH REVEAL of USAGE:
-  npm install --save feature-u    # VER: >=0.1.0    USAGE: createAspect()
+  npm install --save feature-u    # VER: >=1.0.0    USAGE: createAspect() (v1 replaces App with Fassets obj -AND- publicFace with fassets aspect)
   npm install --save redux-logic  # VER: >=0.7.0    USAGE: createLogicMiddleware()
   ---> 
 
@@ -98,16 +98,16 @@ Polyfills](#potential-need-for-polyfills))_.
 
    **src/app.js**
    ```js
-   import {launchApp}      from 'feature-u';
-   import {reducerAspect}  from 'feature-redux';       // **2**
-   import {logicAspect}    from 'feature-redux-logic'; // **1**
-   import features         from './feature';
+   import {launchApp}           from 'feature-u';
+   import {createReducerAspect} from 'feature-redux';       // **2**
+   import {createLogicAspect}   from 'feature-redux-logic'; // **1**
+   import features              from './feature';
 
    export default launchApp({
 
      aspects: [
-       reducerAspect,  // **2**
-       logicAspect,    // **1**
+       createReducerAspect(), // **2**
+       createLogicAspect(),   // **1**
        ... other Aspects here
      ],
 
@@ -140,6 +140,31 @@ Polyfills](#potential-need-for-polyfills))_.
    });
    ```
 
+3. As a convenience, **feature-redux-logic** auto injects the
+   **feature-u** [`Fassets object`] as a dependency in your logic
+   modules.  This promotes full [Cross Feature Communication].  
+
+   The following example, demonstrates the availability of the
+   `fassets` named parameter:
+
+   ```js
+   import {createLogic}      from 'redux-logic';
+
+   export const someLogic = createLogic({
+
+     ... snip snip
+
+     transform({getState, action, fassets}, next, reject) {
+       ... fassets may be used for cross-feature-communication
+     },
+
+     process({getState, action, fassets}, dispatch, done) {
+       ... fassets may be used for cross-feature-communication
+     }
+
+   });
+   ```
+
 
 **Well that was easy!!** At this point **redux-logic** is **completely
 setup for your application!**
@@ -157,9 +182,9 @@ truly opaque assets _(internal to the feature)_, they are of interest
 to **feature-redux-logic** to the extent that they are needed to configure
 [redux-logic].
 
-Because logic modules may require access to **feature-u**'s [`App`]
-object during code expansion, this property can also be a
-**feature-u** [`managedExpansion()`] callback _(a function that
+Because logic modules may require access to **feature-u**'s [`Fassets
+object`] during code expansion, this property can also be a
+**feature-u** [`expandWithFassets()`] callback _(a function that
 returns the logic modules)_ ... please refer to **feature-u**'s
 discussion of [Managed Code Expansion].
 
@@ -204,7 +229,7 @@ export const doSomething = createLogic({
     ... snip snip
   },
 
-  process({getState, action, app}, dispatch, done) {
+  process({getState, action, fassets}, dispatch, done) {
     ... snip snip
   }
 
@@ -275,6 +300,11 @@ process (_i.e. the inputs and outputs_) are documented here.
   component must be consumed by yet another aspect (_such as
   [feature-redux]_) that in turn manages [redux].
 
+- As a convenience, **feature-redux-logic** auto injects the
+  **feature-u** [`Fassets object`] as a dependency in your logic
+  modules.  This promotes full [Cross Feature Communication].
+  Please refer to the [Usage] section for examples.
+
 
 ### Error Conditions
 
@@ -314,6 +344,8 @@ modules were specified by your features.
 ### logicAspect: Aspect
 
 <ul><!--- indentation hack for github - other attempts with style is stripped (be careful with number bullets) ---> 
+
+`API: createLogicAspect([name='logic']): logicAspect`
 
 The `logicAspect` is the [feature-u] plugin that facilitates
 [redux-logic] integration to your features.
@@ -383,14 +415,15 @@ implemented)_ is intended to address this issue.
 
 
 <!--- feature-u ---> 
-[feature-u]:              https://feature-u.js.org/
-[`launchApp()`]:          https://feature-u.js.org/cur/api.html#launchApp
-[`createFeature()`]:      https://feature-u.js.org/cur/api.html#createFeature
-[`managedExpansion()`]:   https://feature-u.js.org/cur/api.html#managedExpansion
-[publicFace]:             https://feature-u.js.org/cur/crossCommunication.html#publicface-and-the-app-object
-[`Feature`]:              https://feature-u.js.org/cur/api.html#Feature
-[`App`]:                  https://feature-u.js.org/cur/api.html#App
-[Managed Code Expansion]: https://feature-u.js.org/cur/crossCommunication.html#managed-code-expansion
+[feature-u]:                   https://feature-u.js.org/
+[`launchApp()`]:               https://feature-u.js.org/cur/api.html#launchApp
+[`createFeature()`]:           https://feature-u.js.org/cur/api.html#createFeature
+[`expandWithFassets()`]:       https://feature-u.js.org/cur/api.html#expandWithFassets
+[`Feature`]:                   https://feature-u.js.org/cur/api.html#Feature
+[`Fassets object`]:            https://feature-u.js.org/cur/api.html#Fassets
+[Managed Code Expansion]:      https://feature-u.js.org/cur/crossCommunication.html#managed-code-expansion
+[Cross Feature Communication]: https://feature-u.js.org/cur/crossCommunication.html
+
 
 <!--- react ---> 
 [react]:            https://reactjs.org/

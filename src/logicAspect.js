@@ -1,21 +1,33 @@
 import {createLogicMiddleware} from 'redux-logic';  // peerDependency
 import {createAspect,
         launchApp}             from 'feature-u';    // peerDependency:
+import verify                  from './util/verify';
 
 // our logger (integrated/activated via feature-u)
 const logf = launchApp.diag.logf.newLogger('- ***feature-redux-logic*** logicAspect: ');
 
 // NOTE: See README for complete description
-export default createAspect({
-  name: 'logic',
-  validateFeatureContent,
-  assembleFeatureContent,
-  getReduxMiddleware,
-  config: {
-    allowNoLogic$: false,   // PUBLIC: client override to: true || [{logicModules}]
-    createLogicMiddleware$, // HIDDEN: createLogicMiddleware$(app, appLogic): reduxMiddleware
-  },
-});
+export default function createLogicAspect(name='logic') {
+
+  // validate parameters
+  const check = verify.prefix('createLogicAspect() parameter violation: ');
+
+  check(name,                      'name is required');
+  check(typeof name === 'string',  'name must be a string'); // NOTE: didn't want to introduce lodash.isstring dependancy (in the mix of everything else going on in the 1.0.0 upgrade)
+
+  // create/promote our new aspect
+  const logicAspect = createAspect({
+    name,
+    validateFeatureContent,
+    assembleFeatureContent,
+    getReduxMiddleware,
+    config: {
+      allowNoLogic$: false,   // PUBLIC: client override to: true || [{logicModules}]
+      createLogicMiddleware$, // HIDDEN: createLogicMiddleware$(fassets, appLogic): reduxMiddleware
+    },
+  });
+  return logicAspect;
+}
 
 
 /**
@@ -45,14 +57,14 @@ function validateFeatureContent(feature) {
  * Interpret the supplied features, defining our redux middleware 
  * in support of reduc-logic.
  *
- * @param {App} app the App object used in feature cross-communication.
+ * @param {Fassets} fassets the Fassets object used in cross-feature-communication.
  * 
  * @param {Feature[]} activeFeatures - The set of active (enabled)
  * features that comprise this application.
  *
  * @private
  */
-function assembleFeatureContent(app, activeFeatures) {
+function assembleFeatureContent(fassets, activeFeatures) {
 
   // accumulate logic modules across all features
   const hookSummary = [];
@@ -103,7 +115,7 @@ function assembleFeatureContent(app, activeFeatures) {
   // ... retained in self for promotion to feature-redux plugin
   if (appLogic.length > 0) {
     // ... accomplished in internal config micro function (a defensive measure to allow easier overriding by client)
-    this.logicMiddleware = this.config.createLogicMiddleware$(app, appLogic);
+    this.logicMiddleware = this.config.createLogicMiddleware$(fassets, appLogic);
   }
   // if we have no logic ... we have no middleware
   else {
@@ -120,11 +132,10 @@ function assembleFeatureContent(app, activeFeatures) {
  * measure to make it easier for a client to override (if needed for
  * some unknown reason).
  *
- * @param {App} app the App object used in feature
- * cross-communication.  This must be dependancy injected into
- * redux-logic.
+ * @param {Fassets} fassets the Fassets object used in cross-feature-communication.
+ * This must be dependancy injected into redux-logic.
  *
- * @param {logicModuls[]} appLogicArr - an array of redux-logic
+ * @param {logicModuls[]} appLogic - an array of redux-logic
  * modules (gaurenteed to have at least one entry).
  *
  * @return {reduxMiddleware} the newly created redux middleware for
@@ -132,11 +143,11 @@ function assembleFeatureContent(app, activeFeatures) {
  *
  * @private
  */
-function createLogicMiddleware$(app, appLogic) {
+function createLogicMiddleware$(fassets, appLogic) {
   // define our redux middleware for redux-logic
   return createLogicMiddleware(appLogic,
-                               { // inject our app as a redux-logic dependancy
-                                 app,
+                               { // inject our fassets as a redux-logic dependancy
+                                 fassets,
                                });
 }
 

@@ -1,4 +1,4 @@
-import logicAspect  from './logicAspect';
+import createLogicAspect  from './logicAspect';
 
 //*** 
 //*** Promote all feature-redux-logic utilities through a centralized module.
@@ -10,7 +10,7 @@ import logicAspect  from './logicAspect';
 //       -or-
 //         import * as FeatureU from 'feature-redux-logic';
 export {
-  logicAspect,
+  createLogicAspect,
 };
 
 // NOTE: This default export supports CommonJS modules (otherwise Babel does NOT promote them).
@@ -19,5 +19,5 @@ export {
 //       -or-
 //         const FeatureU   = require('feature-redux-logic');
 export default {
-  logicAspect,
+  createLogicAspect,
 };
